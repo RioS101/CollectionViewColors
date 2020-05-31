@@ -63,6 +63,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="IxQ-jj-ZSu" id="r3q-vS-n4W"/>
+                        <outlet property="flowLayout" destination="FM3-ih-2sI" id="E2S-vi-UFV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qio-oJ-tif" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
