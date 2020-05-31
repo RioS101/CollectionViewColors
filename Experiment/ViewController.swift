@@ -28,7 +28,7 @@ extension ViewController: UICollectionViewDataSource {
     }
 }
 
-class ViewController: UIViewController, UICollectionViewDelegate {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
@@ -39,12 +39,26 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         collectionView.dataSource = self
         collectionView.delegate = self
         
+        // UICollectionViewFlowLayout
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         // Do any additional setup after loading the view.
+    }
+    
+    // MARK: UICollectionViewDelegateFlowLayout methods
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let totalwidth = collectionView.bounds.size.width;
+        let numberOfCellsPerRow = 3
+        let oddEven = indexPath.row / numberOfCellsPerRow % 2
+        let dimensions = CGFloat(Int(totalwidth) / numberOfCellsPerRow)
+        if (oddEven == 0) {
+            return CGSize(width: dimensions, height: dimensions)
+        } else {
+            return CGSize(width: dimensions, height: dimensions / 2)
+        }
     }
     
 
@@ -54,7 +68,7 @@ class ViewController: UIViewController, UICollectionViewDelegate {
             return UIColor.black    // return black if we get an unexpected row index
         }
         
-        var hueValue: CGFloat = CGFloat(indexPath.row) / CGFloat(totalColors)
+        let hueValue: CGFloat = CGFloat(indexPath.row) / CGFloat(totalColors)
         return UIColor(hue: hueValue, saturation: 1.0, brightness: 1.0, alpha: 1.0)
     }
     
